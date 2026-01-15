@@ -9,36 +9,28 @@
   }
   
   let movies = $state<Movie[]>([]); 
-  let loading = $state(true);
   let category = $derived(page.params.category);
 
   $effect(() => {
-    const controller = new AbortController();
+    // call the function only when category exists
     if (category) {
-      fetchMovies(category, controller.signal);
+      fetchMovies(category);
     }
-    return () => controller.abort();
   });
 
-  async function fetchMovies(cat: string, signal: AbortSignal) {
-    loading = true;
-    
-    // --- GUIDE ---
-    // 1. Fetch data from `/api/movies/${cat}` using the provided 'signal'
-    // 2. If the response is OK, convert it to JSON
-    // 3. Update the 'movies' state with the data
-    // 4. Ensure 'loading' is set to false at the end (if not aborted)
-    
+  async function fetchMovies(cat: string) {
     try {
-        // Your code here...
+      // START YOUR CODE HERE
+      // 1. The Request: Sending an Asynchronous GET request to the API Endpoint
+      // 2. The Unboxing (The JSON): Parsing the response body stream into a JS Array
+      
     } catch (err) {
-        // Handle errors...
-    }
-    // --- END HERE ---
+      // 3. Error Handling: Catching network failures so the app doesn't crash
+
+      console.error("Failed to fetch movies:", err);
+    } 
   }
 </script>
-
-
 
 <h1 class="category-title">{category} Movies</h1>
 
@@ -60,57 +52,57 @@
 </div>
 
 <style>
-    .category-title {
-        text-transform: capitalize;
-        margin-bottom: 2rem;
-        font-size: 2rem;
-    }
+  .category-title {
+      text-transform: capitalize;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+  }
 
-    .movie-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 25px;
-    }
+  .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 25px;
+  }
 
-    .movie-card {
-        background: #181818;
-        border-radius: 4px;
-        overflow: hidden;
-        transition: transform 0.3s;
-        cursor: pointer;
-    }
+  .movie-card {
+      background: #181818;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s;
+      cursor: pointer;
+  }
 
-    .movie-card:hover {
-        transform: scale(1.08);
-        z-index: 2;
-    }
+  .movie-card:hover {
+      transform: scale(1.08);
+      z-index: 2;
+  }
 
-    .poster-placeholder {
-        aspect-ratio: 2/3;
-        background: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3rem;
-    }
+  .poster-placeholder {
+      aspect-ratio: 2/3;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+  }
 
-    .movie-info {
-        padding: 15px;
-    }
+  .movie-info {
+      padding: 15px;
+  }
 
-    .movie-info h3 {
-        margin: 0 0 10px 0;
-        font-size: 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  .movie-info h3 {
+      margin: 0 0 10px 0;
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
 
-    .meta {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: #46d369; /* Green for rating/match score */
-        font-weight: bold;
-    }
+  .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #46d369; /* Green for rating/match score */
+      font-weight: bold;
+  }
 </style>
